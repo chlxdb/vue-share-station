@@ -1,18 +1,18 @@
 <template>
   <div>
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>公告</span>
+        <p>{{ notice }}</p>
+      </div>
+    </el-card>
+
     <el-container>
       <el-header>资料库</el-header>
     </el-container>
 
     <div class="index">
-      <!-- 跑马灯  -->
-      <div>
-        <el-carousel :interval="4000" type="card" height="200px">
-          <el-carousel-item v-for="item in imgList" :key="item.id">
-            <img :src="item.idview" class="image" />
-          </el-carousel-item>
-        </el-carousel>
-      </div>
+      <div></div>
     </div>
 
     <div slot="header" class="clearfix">
@@ -37,16 +37,12 @@ export default {
     return {
       passagelist: [],
       contentid: [],
-      imgList: [
-        { id: 0, idview: "../assets/4.jpg" },
-        { id: 1, idview: "../assets/5.jpg" },
-        { id: 2, idview: "../assets/6.jpg" },
-        { id: 3, idview: "../assets/7.jpg" },
-      ],
+      notice: "",
     };
   },
   created: function () {
     this.getpassage();
+    this.getnotice();
   },
   methods: {
     getpassage() {
@@ -63,7 +59,20 @@ export default {
           this.contentid.push(res.data.passageItem[i].id);
         }
       });
-      console.log(this.contentid);
+      // console.log(this.contentid);
+    },
+
+    getnotice() {
+      this.$axios({
+        url: "http://121.4.187.232:8080/notice/queryNotice",
+        method: "get",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }).then((res) => {
+        console.log(res.data);
+        this.notice = res.data;
+      });
     },
   },
 };
@@ -76,44 +85,8 @@ export default {
   text-align: center;
   line-height: 60px;
 }
-
-.el-main {
-  background-color: #e9eef3;
-  color: #333;
-  text-align: center;
-  line-height: 100%;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.index {
-  background: #c8cfd8;
-  width: 80%;
-  text-align: center;
-  margin-left: 142px;
-  width: 80.6%;
-}
-.el-carousel__item h3 {
-  color: #475669;
-  font-size: 14px;
-  opacity: 0.75;
-  line-height: 200px;
-  margin: 0;
-}
-
-.el-carousel__item:nth-child(2n) {
-  background-color: #99a9bf;
-}
-
-.el-carousel__item:nth-child(2n + 1) {
-  background-color: #d3dce6;
-}
 .text {
   font-size: 14px;
-}
-
-.item {
-  margin-bottom: 18px;
 }
 
 .clearfix:before,
@@ -127,11 +100,5 @@ export default {
 
 .box-card {
   width: 480px;
-
-  position: absolute;
-  margin-left: 130px;
-  width: 80%;
-  top: 300px;
-  height: 900px;
 }
 </style>

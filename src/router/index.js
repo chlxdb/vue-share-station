@@ -9,6 +9,7 @@ const login2 = () => import('../components/Login2')
 const manager = () => import('../components/manager')
 const comment = () => import('../components/comment')
 const passagesent = () => import('../components/passagesent')
+const contentdetail = () => import('../components/contentdetail')
 Vue.use(VueRouter)
 const routes = [
     {
@@ -21,7 +22,7 @@ const routes = [
         children: [
             {
                 path: '',        //嵌套的默认路径
-                redirect: 'mainpage'
+                redirect: 'mainpage',
             },
             {
                 path: 'mainpage',
@@ -31,6 +32,7 @@ const routes = [
                 path: 'comment',
                 component: comment
             },
+
 
 
 
@@ -53,14 +55,15 @@ const routes = [
         path: '/manager',
         component: manager,
         children: [
-            {
-                path: '',        //嵌套的默认路径
-                redirect: 'passagesent'
-            },
+            // {
+            //   path: '',        //嵌套的默认路径
+            // redirect: 'passagesent'
+            //},
             {
                 path: 'passagesent',
                 component: passagesent
             },
+
 
 
         ],
@@ -77,6 +80,12 @@ const routes = [
 
 
     },
+    {
+        path: '/contentdetail/:passageID',
+        name: "Details",
+        component: contentdetail
+
+    }
 
 
 ]

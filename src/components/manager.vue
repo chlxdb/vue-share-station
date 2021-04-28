@@ -49,6 +49,7 @@
       </el-aside>
       <!--右侧内容主体-->
       <el-main>
+        <div>hahahahahaha</div>
         <router-view></router-view>
       </el-main>
     </el-container>

@@ -1,16 +1,9 @@
 <template>
   <div>
     <ul>
-      <router-link to="/based/contentdetail">
-        <li
-          class="item"
-          v-for="(item, index) in passagelist"
-          :key="index"
-          @click="getpassage(item.id)"
-        >
-          <a> {{ item.title }}</a>
-        </li>
-      </router-link>
+      <li class="item" v-for="(item, index) in passagelist" :key="index">
+        <a> {{ item }}</a>
+      </li>
     </ul>
   </div>
 </template>
@@ -18,26 +11,35 @@
 export default {
   name: "contentdetail",
   data() {
-    return {};
+    return {
+      Id: "",
+      passagelist: [],
+    };
   },
+  mounted() {
+    this.Id = this.$route.params.passageID;
+    this.getDetail(this.passageID);
+    console.log(this.ID);
+  },
+  //created: function () {
+  // this.getpassagecontent();
+  // },
   methods: {
-    getpassagecontent() {
-      this.getpassage();
+    getDetail() {
       this.$axios({
-        url: "http://121.4.187.232:8080/passage/passageResources",
+        url:
+          "http://121.4.187.232:8080/passage/passageResources?passageID=" +
+          this.Id,
         method: "get",
-        params: {
-          passageID: this.list.id,
-        },
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
-        for (var i in res.data) {
-          this.contentlist.push(res.data[i]);
-          console.log(this.contentlist);
-        }
+        // for (var i in res) {
+        this.passagelist.push(res.data[0].content);
+        //  }
       });
+      console.log(this.passagelist);
     },
   },
 };

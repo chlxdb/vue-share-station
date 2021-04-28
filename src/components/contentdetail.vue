@@ -2,7 +2,9 @@
   <div>
     <ul>
       <li class="item" v-for="(item, index) in passagelist" :key="index">
-        <a> {{ item }}</a>
+        <strong>{{ item.title }}</strong>
+        <p>{{ item.content }}</p>
+        <p>{{ item.time }}</p>
       </li>
     </ul>
   </div>
@@ -19,11 +21,8 @@ export default {
   mounted() {
     this.Id = this.$route.params.passageID;
     this.getDetail(this.passageID);
-    console.log(this.ID);
+    // console.log(this.ID);
   },
-  //created: function () {
-  // this.getpassagecontent();
-  // },
   methods: {
     getDetail() {
       this.$axios({
@@ -35,11 +34,9 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
-        // for (var i in res) {
-        this.passagelist.push(res.data[0].content);
-        //  }
+        this.passagelist.push(res.data[0]);
       });
-      console.log(this.passagelist);
+      // console.log(this.passagelist);
     },
   },
 };

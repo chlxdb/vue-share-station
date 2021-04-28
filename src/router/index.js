@@ -32,6 +32,12 @@ const routes = [
                 path: 'comment',
                 component: comment
             },
+            {
+                path: 'contentdetail/:passageID',
+                name: "Details",
+                component: contentdetail
+
+            }
 
 
 
@@ -80,12 +86,7 @@ const routes = [
 
 
     },
-    {
-        path: '/contentdetail/:passageID',
-        name: "Details",
-        component: contentdetail
 
-    }
 
 
 ]

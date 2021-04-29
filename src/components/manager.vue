@@ -30,20 +30,34 @@
                 <router-link to="/manager/passagesent">
                   <el-menu-item index="1-1">发布区</el-menu-item>
                 </router-link>
-                <el-menu-item index="1-2">管理区</el-menu-item>
+                <router-link to="/manager/resousemanage">
+                  <el-menu-item index="1-2">管理区</el-menu-item>
+                </router-link>
               </el-menu-item-group>
             </el-submenu>
-            <el-menu-item index="2">
-              <i class="el-icon-menu"></i>
-              <span slot="title">大厅评论区</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <span slot="title">用户管理区</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-              <i class="el-icon-setting"></i>
-              <span slot="title">实时数据区</span>
-            </el-menu-item>
+            <router-link to="/manager/noticemanage">
+              <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span slot="title"> 公告管理区</span>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/manager/controlcomment">
+              <el-menu-item index="3">
+                <i class="el-icon-menu"></i>
+                <span slot="title">大厅评论区</span>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/manager/usermanager">
+              <el-menu-item index="4">
+                <span slot="title">用户管理区</span>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/manager/datamanage">
+              <el-menu-item index="5">
+                <i class="el-icon-setting"></i>
+                <span slot="title">实时数据区</span>
+              </el-menu-item>
+            </router-link>
           </el-menu>
         </el-col>
       </el-aside>

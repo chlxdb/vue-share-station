@@ -6,10 +6,16 @@ const based = () => import('../components/based')
 const mainpage = () => import('../components/mainpage')
 const login = () => import('../components/Login')
 const login2 = () => import('../components/Login2')
-const manager = () => import('../components/manager')
 const comment = () => import('../components/comment')
-const passagesent = () => import('../components/passagesent')
 const contentdetail = () => import('../components/contentdetail')
+const manager = () => import('../components/manager')
+const passagesent = () => import('../components/passagesent')
+const resousemanage = () => import('../components/resousemanage')
+const controlcomment = () => import('../components/controlcomment')
+const noticemanage = () => import('../components/noticemanage')
+const usermanager = () => import('../components/usermanager')
+const datamanage = () => import('../components/datamanage')
+
 Vue.use(VueRouter)
 const routes = [
     {
@@ -53,8 +59,8 @@ const routes = [
     },
 
     {
-        path: '/login2',
-        component: login2
+        path: '/Login2',
+        component: login2,
     },
 
     {
@@ -68,6 +74,34 @@ const routes = [
             {
                 path: 'passagesent',
                 component: passagesent
+            },
+            {
+                path: 'resousemanage',
+                component: resousemanage
+            },
+
+            {
+                path: 'controlcomment',
+                component: controlcomment
+            },
+
+            {
+                path: 'noticemanage',
+                component: noticemanage
+            },
+
+            {
+                path: 'usermanager',
+                component: usermanager
+            },
+            {
+                path: 'datamanage',
+                component: datamanage
+            },
+
+            {
+                path: 'datamanage',
+                component: datamanage
             },
 
 

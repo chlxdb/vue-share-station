@@ -1,9 +1,9 @@
 <template>
-  <div>passageshow</div>
+  <div>commentcontrol</div>
 </template>
 <script>
 export default {
-  name: "passageshow",
+  name: "commentcontrol",
 };
 </script>
 <style scoped>

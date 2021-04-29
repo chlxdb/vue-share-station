@@ -96,7 +96,7 @@ export default {
             },
           }).then((res) => {
             if (res.data.state === true) {
-              //console.log(res);
+              
               window.sessionStorage.setItem("token", res.data.token);
               this.$router.push("/manager"); //登录验证成功路由实现跳转
               this.$notify({

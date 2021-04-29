@@ -1,7 +1,7 @@
-<template></template>
+<template><div>xxx</div></template>
 <script>
 export default {
-  name: "controlComment",
+  name: "controlcomment",
 };
 </script>
 <style scoped>

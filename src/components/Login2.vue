@@ -97,7 +97,10 @@ export default {
               password: this.loginForm.password,
             },
           }).then((res) => {
+            console.log(res);
             if (res.status === 200) {
+              window.sessionStorage.setItem("token2", res.data.token);
+              window.sessionStorage.setItem("token2user", res.data.userID);
               this.$router.push("/based"); //登录验证成功路由实现跳转
               this.$notify({
                 title: "提示",

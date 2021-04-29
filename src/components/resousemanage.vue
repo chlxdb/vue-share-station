@@ -1,9 +1,9 @@
 <template>
-  <div>resousemanager</div>
+  <div>resousemanage</div>
 </template>
 <script>
 export default {
-  name: "resousemanager",
+  name: "resousemanage",
 };
 </script>
 <style scoped>

@@ -10,8 +10,20 @@
       </ul>
     </div>
     <div>
+      <el-input
+        type="textarea"
+        :rows="2"
+        placeholder="请输入内容"
+        v-model="textarea"
+      >
+      </el-input>
+      <el-button @click="sent">发表评论</el-button>
+    </div>
+    <div>
       <ul>
-        <li class="item" v-for="(item, index) in commentlist" :key="index"></li>
+        <li class="item" v-for="(item, index) in commentlist" :key="index">
+          {{ item.content }}
+        </li>
       </ul>
     </div>
   </div>
@@ -21,6 +33,9 @@ export default {
   name: "contentdetail",
   data() {
     return {
+      token: "",
+      tokenuser: "",
+      textarea: "",
       Id: "",
       passagelist: [],
       commentlist: [],
@@ -57,8 +72,29 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
-        this.commentlist.push(res.data);
-        console.log(this.commentlist);
+        for (let i in res.data) this.commentlist.push(res.data[i]);
+      });
+      console.log(this.commentlist);
+    },
+    sent() {
+      this.token = sessionStorage.getItem("token2");
+      this.tokenuser = sessionStorage.getItem("token2user");
+      this.$axios({
+        url:
+          "http://121.4.187.232:8080/comment/createComment?content=" +
+          this.textarea +
+          "&passageID=" +
+          this.Id +
+          "&userID=" +
+          this.tokenuser,
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          token: this.token,
+        },
+      }).then(() => {
+        window.location.reload();
+        this.textarea = "";
       });
     },
   },

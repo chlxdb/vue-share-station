@@ -1,6 +1,25 @@
 <template>
   <el-tabs type="border-card">
     <el-tab-pane label="文章评论">
+      <el-button type="text" @click="dialogVisible = true"
+        >发布新评论</el-button
+      >
+      <el-dialog title="发布新评论" :visible.sync="dialogVisible" width="30%">
+        <el-form ref="form" :model="form" label-width="80px">
+          <el-form-item label="评论">
+            <el-input
+              type="textarea"
+              v-model="form.content"
+              maxlength="30"
+              show-word-limit
+            ></el-input>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="sent">确 定</el-button>
+        </span>
+      </el-dialog>
       <el-table
         ref="multipleTable"
         :data="list"
@@ -29,6 +48,11 @@ export default {
   name: "controlcomment2",
   data() {
     return {
+      dialogVisible: false,
+      form: {
+        content: "",
+      },
+
       token: "",
       multipleSelection: [],
       list: [],
@@ -67,6 +91,26 @@ export default {
         for (let i in res.data) this.list.push(res.data[i]);
       });
       console.log(this.list);
+    },
+
+    sent() {
+      this.$axios({
+        url: "http://121.4.187.232:8080/admin/createComment",
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          token: this.token,
+        },
+        params: {
+          content: this.form.content,
+          passageID: this.Id,
+        },
+      }).then(() => {
+        {
+          this.dialogVisible = false;
+          window.location.reload();
+        }
+      });
     },
     remove() {
       for (let i in this.multipleSelection) {

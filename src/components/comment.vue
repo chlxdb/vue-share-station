@@ -43,9 +43,10 @@ export default {
         params: {
           content: this.textarea,
         },
-      }).then(() => {
+      }).then((res) => {
         window.location.reload();
         this.textarea = "";
+        console.log(res);
       });
     },
     getcomment() {

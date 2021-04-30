@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      <el-image :src="src"></el-image>
       <ul>
         <li class="item" v-for="(item, index) in passagelist" :key="index">
           <strong>{{ item.title }}</strong>
@@ -33,6 +34,7 @@ export default {
   name: "contentdetail",
   data() {
     return {
+      src: "",
       token: "",
       tokenuser: "",
       textarea: "",
@@ -58,7 +60,9 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
+        console.log(res);
         this.passagelist.push(res.data[0]);
+        this.src = res.data[2];
       });
       // console.log(this.passagelist);
     },

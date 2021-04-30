@@ -17,6 +17,7 @@
 
     <div slot="header" class="clearfix">
       <span>文章区</span>
+      <img :src="src" />
 
       <ul>
         <li class="item" v-for="(item, index) in passagelist" :key="index">
@@ -35,6 +36,7 @@ export default {
   name: "mainpage",
   data() {
     return {
+      src: "",
       passagelist: [],
       contentid: [],
       notice: "",
@@ -42,6 +44,7 @@ export default {
   },
   created: function () {
     this.getpassage();
+    this.getpic();
     this.getnotice();
   },
   methods: {
@@ -59,7 +62,17 @@ export default {
           this.contentid.push(res.data.passageItem[i].id);
         }
       });
-      // console.log(this.contentid);
+    },
+    getpic() {
+      this.$axios({
+        url: "http://121.4.187.232:8080/passage/passageResources?passageID=18",
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }).then(() => {
+        // console.log(res);
+      });
     },
 
     getnotice() {

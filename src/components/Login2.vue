@@ -82,43 +82,39 @@ export default {
     },
 
     login1() {
-      this.$refs.loginFormRef
-        .validate((valid) => {
-          if (!valid) return;
+      this.$refs.loginFormRef.validate((valid) => {
+        if (!valid) return;
 
-          this.$axios({
-            url: "http://121.4.187.232:8080/user/userLogin",
-            method: "post",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            params: {
-              username: this.loginForm.username,
-              password: this.loginForm.password,
-            },
-          }).then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-              window.sessionStorage.setItem("token2", res.data.token);
-              window.sessionStorage.setItem("token2user", res.data.userID);
-              this.$router.push("/based"); //登录验证成功路由实现跳转
-              this.$notify({
-                title: "提示",
-                message: "登录成功",
-                duration: 3000,
-              });
-            } else {
-              this.$notify({
-                title: "提示",
-                message: "登录失败",
-                duration: 3000,
-              });
-            }
-          });
-        })
-        .catch((err) => {
-          console.log(err);
+        this.$axios({
+          url: "http://121.4.187.232:8080/user/userLogin",
+          method: "post",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          params: {
+            username: this.loginForm.username,
+            password: this.loginForm.password,
+          },
+        }).then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            window.sessionStorage.setItem("token2", res.data.token);
+            window.sessionStorage.setItem("token2user", res.data.userID);
+            this.$router.push("/based"); //登录验证成功路由实现跳转
+            this.$notify({
+              title: "提示",
+              message: "登录成功",
+              duration: 3000,
+            });
+          } else {
+            this.$notify({
+              title: "提示",
+              message: "登录失败",
+              duration: 3000,
+            });
+          }
         });
+      });
     },
     login2() {
       this.$refs.loginFormRef

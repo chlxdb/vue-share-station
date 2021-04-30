@@ -41,12 +41,23 @@
                 <span slot="title"> 公告管理区</span>
               </el-menu-item>
             </router-link>
-            <router-link to="/manager/controlcomment">
-              <el-menu-item index="3">
-                <i class="el-icon-menu"></i>
-                <span slot="title">大厅评论区</span>
-              </el-menu-item>
-            </router-link>
+
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-location"></i>
+                <span>评论区管理</span>
+              </template>
+              <el-menu-item-group>
+                <template slot="title"></template>
+                <router-link to="/manager/controlcomment1">
+                  <el-menu-item index="3-1">大厅评论区</el-menu-item>
+                </router-link>
+                <router-link to="/manager/controlcomment2passage">
+                  <el-menu-item index="3-2">文章评论区</el-menu-item>
+                </router-link>
+              </el-menu-item-group>
+            </el-submenu>
+
             <router-link to="/manager/usermanager">
               <el-menu-item index="4">
                 <span slot="title">用户管理区</span>
@@ -63,7 +74,6 @@
       </el-aside>
       <!--右侧内容主体-->
       <el-main>
-        <div>hahahahahaha</div>
         <router-view></router-view>
       </el-main>
     </el-container>

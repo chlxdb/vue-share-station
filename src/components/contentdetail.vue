@@ -74,7 +74,7 @@ export default {
       }).then((res) => {
         for (let i in res.data) this.commentlist.push(res.data[i]);
       });
-      console.log(this.commentlist);
+      //console.log(this.commentlist);
     },
     sent() {
       this.token = sessionStorage.getItem("token2");

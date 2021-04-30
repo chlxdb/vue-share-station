@@ -16,7 +16,6 @@
         </el-table-column>
         <el-table-column prop="time" label="时间" width="400">
         </el-table-column>
-        <el-table-column prop="id" label="序号" width="400"> </el-table-column>
       </el-table>
     </div>
   </div>
@@ -55,7 +54,7 @@ export default {
         method: "get",
       }).then((res) => {
         {
-          // console.log(res.data);
+          console.log(res.data);
           // /alert(JSON.stringify(res.data));
           if (this.list == "") {
             for (var i in res.data) {

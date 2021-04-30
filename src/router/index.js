@@ -11,10 +11,12 @@ const contentdetail = () => import('../components/contentdetail')
 const manager = () => import('../components/manager')
 const passagesent = () => import('../components/passagesent')
 const resousemanage = () => import('../components/resousemanage')
-const controlcomment = () => import('../components/controlcomment')
+const controlcomment1 = () => import('../components/controlcomment1')
 const noticemanage = () => import('../components/noticemanage')
 const usermanager = () => import('../components/usermanager')
 const datamanage = () => import('../components/datamanage')
+const controlcomment2 = () => import('../components/controlcomment2')
+const controlcomment2passage = () => import('../components/controlcomment2passage')
 
 Vue.use(VueRouter)
 const routes = [
@@ -81,9 +83,24 @@ const routes = [
             },
 
             {
-                path: 'controlcomment',
-                component: controlcomment
+                path: 'controlcomment1',
+                component: controlcomment1,
+
+
             },
+            {
+                path: 'controlcomment2passage',
+                component: controlcomment2passage
+            },
+
+            {
+                path: 'controlcomment2/:passageID',
+                name: "controlcomment2Details",
+                component: controlcomment2,
+
+
+            },
+
 
             {
                 path: 'noticemanage',
@@ -98,13 +115,6 @@ const routes = [
                 path: 'datamanage',
                 component: datamanage
             },
-
-            {
-                path: 'datamanage',
-                component: datamanage
-            },
-
-
 
         ],
 

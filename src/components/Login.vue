@@ -80,39 +80,37 @@ export default {
       this.$refs.loginFormRef.resetFields();
     },
     login() {
-      this.$refs.loginFormRef
-        .validate((valid) => {
-          if (!valid) return;
+      this.$refs.loginFormRef.validate((valid) => {
+        if (!valid) return;
 
-          this.$axios({
-            url: "http://121.4.187.232:8080/user/adminLogin",
-            method: "post",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            params: {
-              username: this.loginForm.username,
-              password: this.loginForm.password,
-            },
-          }).then((res) => {
-            if (res.data.state === true) {
-              
-              window.sessionStorage.setItem("token", res.data.token);
-              this.$router.push("/manager"); //登录验证成功路由实现跳转
-              this.$notify({
-                title: "提示",
-                message: "管理员登录成功",
-                duration: 3000,
-              });
-            } else {
-              this.$notify({
-                title: "提示",
-                message: "管理员登录失败",
-                duration: 3000,
-              });
-            }
-          });
-        })
+        this.$axios({
+          url: "http://121.4.187.232:8080/user/adminLogin",
+          method: "post",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          params: {
+            username: this.loginForm.username,
+            password: this.loginForm.password,
+          },
+        }).then((res) => {
+          if (res.data.state === true) {
+            window.sessionStorage.setItem("token", res.data.token);
+            this.$router.push("/manager"); //登录验证成功路由实现跳转
+            this.$notify({
+              title: "提示",
+              message: "管理员登录成功",
+              duration: 3000,
+            });
+          } else {
+            this.$notify({
+              title: "提示",
+              message: "管理员登录失败",
+              duration: 3000,
+            });
+          }
+        });
+      });
     },
   },
 };

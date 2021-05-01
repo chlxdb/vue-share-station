@@ -45,11 +45,20 @@ export default {
   name: "based",
   data() {
     return {
-      activeIndex: "1",
-      activeIndex2: "1",
+      token2: "",
     };
   },
-  methods: {},
+  methods: {
+    logout() {
+      this.token2 = sessionStorage.getItem("token2");
+      if (this.token2 != "") {
+        window.sessionStorage.clear();
+        this.$notify("已退出");
+      } else {
+        this.$notify("还未登录");
+      }
+    },
+  },
 };
 </script>
 <style scoped>

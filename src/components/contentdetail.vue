@@ -2,13 +2,12 @@
   <div>
     <div>
       <el-image :src="src"></el-image>
-      <ul>
-        <li class="item" v-for="(item, index) in passagelist" :key="index">
-          <strong>{{ item.title }}</strong>
-          <p>{{ item.content }}</p>
-          <p>{{ item.time }}</p>
-        </li>
-      </ul>
+
+      <div class="item" v-for="(item, index) in passagelist" :key="index">
+        <strong>{{ item.title }}</strong>
+        <p>{{ item.content }}</p>
+        <p>{{ item.time }}</p>
+      </div>
     </div>
     <div>
       <el-input
@@ -21,11 +20,9 @@
       <el-button @click="sent">发表评论</el-button>
     </div>
     <div>
-      <ul>
-        <li class="item" v-for="(item, index) in commentlist" :key="index">
-          {{ item.content }}
-        </li>
-      </ul>
+      <div class="item" v-for="(item, index) in commentlist" :key="index">
+        {{ item.content }}
+      </div>
     </div>
   </div>
 </template>

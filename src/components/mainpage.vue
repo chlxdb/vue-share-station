@@ -17,6 +17,17 @@
 
     <div slot="header" class="clearfix">
       <span>文章区</span>
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="queryInfo.pageNumber"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-count="totalPage"
+        :page-size="10"
+        layout="sizes, prev, pager, next"
+      >
+      </el-pagination>
+
       <img :src="src" />
 
       <ul>

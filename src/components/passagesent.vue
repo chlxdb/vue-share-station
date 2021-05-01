@@ -17,6 +17,32 @@
         只能上传jpg/png文件，且不超过500kb
       </div>
     </el-upload>
+
+    <el-button type="text" @click="dialogVisible = true">创建新文章</el-button>
+    <el-dialog title="创建新文章" :visible.sync="dialogVisible" width="30%">
+      <el-form ref="form" :model="form" label-width="80px">
+        <el-form-item label="标题">
+          <el-input
+            type="textarea"
+            v-model="form.title"
+            maxlength="30"
+            show-word-limit
+          ></el-input>
+          <el-form-item label="内容">
+            <el-input
+              type="textarea"
+              v-model="form.content"
+              maxlength="30"
+              show-word-limit
+            ></el-input>
+          </el-form-item>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="sent">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -24,6 +50,12 @@ export default {
   name: "passagesent",
   data() {
     return {
+      dialogVisible: false,
+      form: {
+        title: "",
+        content: "",
+      },
+
       token: "",
     };
   },
@@ -63,35 +95,28 @@ export default {
           console.log(err);
         });
     },
-    // sent() {
-    //   //上传
-
-    //   //添加请求头
-    //   var formData = new FormData();
-    //   formData.append("file", this.fileList[2].url);
-    //   formData.append("passageID", 18);
-    //   //添加请求头
-    //   let config = {
-    //     headers: { "Content-Type": "multipart/form-data", token: this.token },
-    //   };
-    //   this.$axios
-    //     .post("http://121.4.187.232:8080/admin/uploadImg", formData, config)
-    //     .then((result) => {
-    //       console.log(result);
-    //       if (result.data.code == "200") {
-    //         //  console.log(result);
-    //         this.fid = result.data.data.fid;
-    //         //	console.log(e.target.files[0])
-    //         this.upImg = result.data.data.url;
-    //         //  console.log(this.upImg)
-    //         this.idBaiDuOcr1(1);
-    //       } else if (result.data.code == "400") {
-    //         this.$toast(
-    //           "图片超过最大限制10M，上传失败。 参考解决方案： 1： 手工裁剪图片中多余部分   2： 图片发到微信聊天页面， 重新保存到本地，上传保存后的图片"
-    //         );
-    //       }
-    //     });
-    // },
+    sent() {
+      this.$axios({
+        url: "http://121.4.187.232:8080/admin/createPassage",
+        method: "post",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          token: this.token,
+        },
+        params: {
+          title: this.form.title,
+          content: this.form.content,
+        },
+      }).then(() => {
+        {
+          this.dialogVisible = false;
+          this.$notify({
+            title: "提示",
+            message: "创建成功",
+          });
+        }
+      });
+    },
   },
 };
 </script>

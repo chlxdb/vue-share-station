@@ -21,13 +21,6 @@
         <router-link to="/Login">
           <el-menu-item index="2-2">管理员登录</el-menu-item>
         </router-link>
-        <el-menu-item index="2-3">选项3</el-menu-item>
-        <el-submenu index="2-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="2-4-1">选项1</el-menu-item>
-          <el-menu-item index="2-4-2">选项2</el-menu-item>
-          <el-menu-item index="2-4-3">选项3</el-menu-item>
-        </el-submenu>
       </el-submenu>
 
       <el-menu-item index="3">
@@ -37,6 +30,10 @@
       <el-menu-item index="4"
         ><a href="https://www.ele.me">订单管理</a></el-menu-item
       >
+
+      <el-menu-item index="5"
+        ><el-button type="info" @click="logout">退出</el-button>
+      </el-menu-item>
     </el-menu>
     <div>
       <router-view></router-view>

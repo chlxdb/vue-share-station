@@ -42,7 +42,12 @@
 
           <span style="font-size: 1px">发布于:{{ item.time }}</span>
           <router-link :to="{ name: 'Details', params: { passageID: item.id } }"
-            ><div>查看详情-></div>
+            ><div>
+              查看详情
+              <el-badge :value="12" class="item">
+                <el-button size="small">评论</el-button>
+              </el-badge>
+            </div>
           </router-link>
         </el-card>
       </div>
@@ -179,6 +184,12 @@ export default {
 };
 </script>
 <style scoped>
+.el-badge.item {
+  margin: 5px;
+  margin-left: 310px;
+  width: 0px;
+  padding: 0px;
+}
 .el-message {
   min-width: auto;
   font-size: 14px;

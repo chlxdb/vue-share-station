@@ -1,9 +1,9 @@
 <template>
+  <!-- 后台管理首页 -->
   <el-container>
     <!--头部区-->
     <el-header>
       <div>
-        <img class="pic" src="../assets/6.jpg" alt="" />
         <span>资料分享网站后台管理系统</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
@@ -19,44 +19,25 @@
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
-          >
-            <el-submenu index="1">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>文章资源发布与管理</span>
-              </template>
-              <el-menu-item-group>
-                <template slot="title"></template>
-                <router-link to="/manager/passagesent">
-                  <el-menu-item index="1-1">发布区</el-menu-item>
-                </router-link>
-                <router-link to="/manager/resousemanage">
-                  <el-menu-item index="1-2">管理区</el-menu-item>
-                </router-link>
-              </el-menu-item-group>
-            </el-submenu>
-            <router-link to="/manager/noticemanage">
+            ><router-link to="/manager/resousemanage">
               <el-menu-item index="2">
+                <i class="el-icon-menu"></i>
+                <span slot="title">文章资源中心</span>
+              </el-menu-item>
+            </router-link>
+            <router-link to="/manager/noticemanage">
+              <el-menu-item index="1">
                 <i class="el-icon-menu"></i>
                 <span slot="title"> 公告管理区</span>
               </el-menu-item>
             </router-link>
 
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>评论区管理</span>
-              </template>
-              <el-menu-item-group>
-                <template slot="title"></template>
-                <router-link to="/manager/controlcomment1">
-                  <el-menu-item index="3-1">大厅评论区</el-menu-item>
-                </router-link>
-                <router-link to="/manager/controlcomment2passage">
-                  <el-menu-item index="3-2">文章评论区</el-menu-item>
-                </router-link>
-              </el-menu-item-group>
-            </el-submenu>
+            <router-link to="/manager/controlcomment1">
+              <el-menu-item index="3">
+                <i class="el-icon-menu"></i>
+                <span slot="title"> 大厅评论区</span>
+              </el-menu-item>
+            </router-link>
 
             <router-link to="/manager/usermanager">
               <el-menu-item index="4">
@@ -72,7 +53,9 @@
           </el-menu>
         </el-col>
       </el-aside>
-      <!--右侧内容主体-->
+    </el-container>
+    <!--右侧内容主体-->
+    <el-container>
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -122,10 +105,13 @@ export default {
 }
 
 .el-main {
+  position: absolute;
   background-color: #e9eef3;
   color: #333;
   text-align: center;
-  line-height: 160px;
+  line-height: 60px;
+  height: 100%;
+  width: 100%;
 }
 
 body > .el-container {

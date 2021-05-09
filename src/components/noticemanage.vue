@@ -1,5 +1,6 @@
 <template>
-  <div>
+<!-- 公告控制 -->
+  <div style="margin: 200px">
     <div>
       <el-input
         type="textarea"

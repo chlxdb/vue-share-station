@@ -1,16 +1,17 @@
 <template>
   <div>
     <el-menu
-      :default-active="activeIndex2"
       class="el-menu-demo"
       mode="horizontal"
-      @select="handleSelect"
-      background-color="#545c64"
+      background-color="rgb(147, 192, 238)"
       text-color="#fff"
       active-text-color="#ffd04b"
+      style="text-decoration: none"
     >
       <el-menu-item index="1"
-        ><router-link to="/based/mainpage">主页 </router-link></el-menu-item
+        ><router-link to="/based/mainpage"
+          ><span>主页</span>
+        </router-link></el-menu-item
       >
 
       <el-submenu index="2">
@@ -24,15 +25,13 @@
       </el-submenu>
 
       <el-menu-item index="3">
-        <router-link to="/based/comment">留言大厅 </router-link></el-menu-item
+        <router-link to="/based/comment"
+          ><span>留言大厅</span>
+        </router-link></el-menu-item
       >
 
-      <el-menu-item index="4"
-        ><a href="https://www.ele.me">订单管理</a></el-menu-item
-      >
-
-      <el-menu-item index="5"
-        ><el-button type="info" @click="logout">退出</el-button>
+      <el-menu-item index="4">
+        <el-button type="info" @click="logout">退出</el-button>
       </el-menu-item>
     </el-menu>
     <div>
@@ -48,6 +47,7 @@ export default {
       token2: "",
     };
   },
+
   methods: {
     logout() {
       this.token2 = sessionStorage.getItem("token2");
@@ -62,4 +62,14 @@ export default {
 };
 </script>
 <style scoped>
+.text {
+  font-size: 14px;
+}
+a {
+  text-decoration: none;
+}
+
+.router-link-active {
+  text-decoration: none;
+}
 </style>

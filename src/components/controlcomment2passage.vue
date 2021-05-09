@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <ul>
       <li class="item" v-for="(item, index) in passagelist" :key="index">

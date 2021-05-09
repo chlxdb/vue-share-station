@@ -1,37 +1,63 @@
 <template>
-  <div>
-    <el-container>
-      <el-header>资料库</el-header>
-    </el-container>
-    <!-- <div class="signboard">
-      <div class="sign">THANKS</div>
-      <div class="strings"></div>
-      <div class="pin top"></div>
-      <div class="pin left"></div>
-      <div class="pin right"></div>
-    </div>
-    <div class="wrap">
-      <div class="content">
-        <p>第一条消息</p>
-        <p>第二条消息</p>
-      </div>
-    </div> -->
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>公告</span>
-        <p>{{ notice }}</p>
-      </div>
-    </el-card>
-
+  <div style="margin: 0 auto; background-color: #f0f8ff">
     <div slot="header" class="clearfix">
-      <span>文章区</span>
+      <div class="wrap">
+        <div class="content">
+          <p class="sign">欢迎来到</p>
+          <p class="sign">我的资料分享站</p>
+        </div>
+      </div>
+    </div>
+    <el-button plain @click="open4" style="margin: 50px"> 最新公告 </el-button>
+    <div class="hello" style="margin: 0px 25% 10px 25%">
+      <h1>资料分享站</h1>
 
-      <img :src="src" />
+      <el-row class="table-grid-content">
+        <el-col :span="18" class="grid">
+          <el-input v-model="input" placeholder="请输入搜索内容"></el-input>
+        </el-col>
+        <el-col :span="3" class="grid" :gutter="1">
+          <el-button type="success" icon="el-icon-search" @click="tables"
+            >搜索</el-button
+          >
+        </el-col>
+      </el-row>
 
-      <div class="item" v-for="(item, index) in passagelist" :key="index">
-        <router-link :to="{ name: 'Details', params: { passageID: item.id } }">
-          <el-link> {{ item.title }}</el-link>
-        </router-link>
+      <div class="item" v-for="(item, index) in list" :key="index">
+        <el-card class="box-card">
+          <div slot="header" class="clearfix">
+            <span
+              ><p class="title">
+                {{
+                  item.title
+                }}超级超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多
+              </p></span
+            >
+          </div>
+          <div class="text">
+            {{
+              item.content
+            }}超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级多超级超级多超级超级多超级超级多超级超级多超级超级多
+          </div>
+
+          <span style="font-size: 1px">发布于:{{ item.time }}</span>
+          <router-link :to="{ name: 'Details', params: { passageID: item.id } }"
+            ><div>查看详情-></div>
+          </router-link>
+        </el-card>
+      </div>
+
+      <div class="block">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[5, 6, 7]"
+          :page-size="pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
+        >
+        </el-pagination>
       </div>
     </div>
   </div>
@@ -41,45 +67,26 @@ export default {
   name: "mainpage",
   data() {
     return {
-      src: "",
-      passagelist: [],
-      contentid: [],
+      searchData: "",
+      list: [],
+      input: "",
+      id: "",
+      total: 10, //数据库中总条数
+      pageSize: 5,
+      currentPage: 1,
+      shopGoods: "",
       notice: "",
+      show: true,
     };
   },
-  created: function () {
-    this.getpassage();
-    this.getpic();
+  created() {
     this.getnotice();
   },
-  methods: {
-    getpassage() {
-      this.$axios({
-        url:
-          "http://121.4.187.232:8080/passage/queryAllPassage?pageNo=1&pageSize=10",
-        method: "get",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then((res) => {
-        for (var i in res.data.passageItem) {
-          this.passagelist.push(res.data.passageItem[i]);
-          this.contentid.push(res.data.passageItem[i].id);
-        }
-      });
-    },
-    getpic() {
-      this.$axios({
-        url: "http://121.4.187.232:8080/passage/passageResources?passageID=18",
-        method: "post",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then(() => {
-        // console.log(res);
-      });
-    },
+  mounted() {
+    this.searchByPage(this.currentPage, this.pageSize);
+  },
 
+  methods: {
     getnotice() {
       this.$axios({
         url: "http://121.4.187.232:8080/notice/queryNotice",
@@ -88,183 +95,198 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
-        console.log(res.data);
+        // console.log(res);
         this.notice = res.data;
       });
     },
+    open4() {
+      this.$notify({
+        title: "最新公告:",
+        message: this.notice,
+        position: "left",
+      });
+    },
+    handleSizeChange: function (size) {
+      this.pageSize = size;
+      //console.log(this.pageSize); //每页下拉显示数据
+      this.searchByPage(this.currentPage, this.pageSize);
+    },
+    handleCurrentChange: function (currentPage) {
+      this.currentPage = currentPage;
+      // console.log(this.currentPage); //点击第几页
+
+      this.searchByPage(this.currentPage, this.pageSize);
+    },
+    searchByPage(currentPage, pageSize) {
+      this.$axios({
+        url: "http://121.4.187.232:8080/passage/queryAllPassage",
+        params: {
+          pageNo: currentPage,
+          pageSize: pageSize,
+        },
+        method: "get",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }).then((res) => {
+        console.log(res);
+        if (this.list !== []) {
+          this.list = [];
+          for (let i in res.data.passageItem)
+            this.list.push(res.data.passageItem[i]);
+        } else {
+          for (let i in res.data.passageItem)
+            this.list.push(res.data.passageItem[i]);
+        }
+        this.total = res.data.passageItemCount;
+        //console.log(this.list);
+      });
+    },
+
+    tables() {
+      var search = this.input;
+      if (search) {
+        this.searchData = this.list.filter(function (list) {
+          console.log(list.title);
+          return Object.keys(list.title).some(function (key) {
+            console.log(key);
+            return String(list.title[key]).toLowerCase().indexOf(search) > -1;
+          });
+        });
+      }
+    },
   },
+  // computed: {
+  //   tables() {
+  //     const input = this.input;
+  //     if (input) {
+  //       console.log("input输入的搜索内容：" + this.input);
+  //       return this.list.filter((data) => {
+  //         console.log("object:" + Object.keys(data));
+  //         return Object.keys(data).some((key) => {
+  //           return String(data[key]).toLowerCase().indexOf(input) > -1;
+  //         });
+
+  //       });
+
+  //     }
+
+  //     return this.shopGoods;
+
+  //   },
+
+  //},
 };
 </script>
 <style scoped>
-.el-header {
-  height: 100%;
-  background-color: #b3c0d1;
-  color: #333;
-  text-align: center;
-  line-height: 60px;
+.el-message {
+  min-width: auto;
+  font-size: 14px;
+  border: 1px solid #ffffff;
+  background: #f75050;
+  box-shadow: 0 3px 6px -4px rgba(0, 0, 0, 0.12),
+    0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 9px 28px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  padding: 16px 21px;
+}
+.title {
+  font-family: initial;
+  font-size: 32px;
+  margin: 0px 0;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.item {
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  background-color: rgb(212, 230, 250);
+  border-radius: 20px;
+  width: 70%;
+  padding: 1%;
+  margin: 50px;
+}
+:hover.item {
+  box-shadow: 0 60px 200px 0 rgba(0, 0, 0, 0.1);
+  background-color: rgb(150, 202, 245);
+  opacity: 0.8;
 }
 .text {
-  font-size: 14px;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
-.clearfix:before,
-.clearfix:after {
-  display: table;
-  content: "";
-}
-.clearfix:after {
-  clear: both;
-}
-
-.box-card {
-  width: 50%;
-}
-/* html,
-body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: radial-gradient(circle at center 60%, white, sandybrown);
-}
-
-.signboard {
-  width: 400px;
-  height: 300px;
-  position: relative;
-  animation: swinging 1.5s ease-in-out infinite alternate;
-  transform-origin: 200px 13px;
-}
-
-.sign {
-  width: 100%;
-  height: 200px;
-  background: burlywood;
-  border-radius: 15px;
-  position: absolute;
-  bottom: 0;
-  font-size: 70px;
-  color: saddlebrown;
-  font-family: serif;
-  font-weight: bold;
-  text-align: center;
-  line-height: 200px;
-  text-shadow: 0 2px 0 rgba(255, 255, 255, 0.3), 0 -2px 0 rgba(0, 0, 0, 0.7);
-}
-
-.strings {
-  width: 150px;
-  height: 150px;
-  border: 5px solid brown;
-  position: absolute;
-  border-right: none;
-  border-bottom: none;
-  transform: rotate(45deg);
-  top: 38px;
-  left: 122px;
-}
-
-.pin {
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  position: absolute;
-}
-
-.pin.top {
-  background: gray;
-  left: 187px;
-}
-
-.pin.left,
-.pin.right {
-  background: brown;
-  top: 110px;
-  box-shadow: 0 2px 0 rgba(255, 255, 255, 0.3);
-}
-
-.pin.left {
-  left: 80px;
-}
-
-.pin.right {
-  right: 80px;
-}
-
-@keyframes swinging {
-  from {
-    transform: rotate(10deg);
-  }
-
-  to {
-    transform: rotate(-10deg);
-  }
-}
 .wrap {
-  height: 30px;
+  height: 300px;
   overflow: hidden;
   position: absolute;
-  top: 30;
-  left: 100;
-  width: 100%;
+  top: 100px;
+  left: 900px;
+  width: 300px;
+  bottom: 300px;
 }
-
-p {
+.sign {
+  border-radius: 30px;
   margin: 0;
-  height: 30px;
+  height: 35px;
   line-height: 30px;
   text-align: center;
-  background: #ccc;
+  background: rgb(245, 201, 201);
   width: 300px;
-}
-
-.content p {
-  position: absolute;
+  overflow: hidden;
 }
 
 @keyframes anim1 {
   0% {
-    top: 40px;
+    top: 100px;
     opacity: 1;
   }
   50% {
-    top: -40px;
+    top: -100px;
     opacity: 1;
   }
   75% {
-    top: -40px;
+    top: -100px;
     opacity: 0;
   }
   100% {
-    top: 40px;
+    top: 100px;
     opacity: 0;
   }
 }
 
 @keyframes anim2 {
   0% {
-    top: -40px;
+    top: -100px;
     opacity: 0;
   }
   25% {
-    top: 40px;
+    top: 100px;
     opacity: 0;
   }
   50% {
-    top: 40px;
+    top: 100px;
     opacity: 1;
   }
   100% {
-    top: -40px;
+    top: -100px;
     opacity: 1;
   }
 }
 .content p:nth-child(1) {
-  animation: anim1 5s linear infinite;
+  animation: anim1 4s linear infinite;
 }
 
 .content p:nth-child(2) {
-  animation: anim2 5s linear infinite;
-} */
+  animation: anim2 4s linear infinite;
+}
+</style>
+<style >
+.el-notification {
+  width: 350px;
+  background-color: rgb(255, 196, 196);
+  top: 50%;
+}
 </style>

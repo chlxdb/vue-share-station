@@ -22,7 +22,7 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '',
-        redirect: '/Login',
+        redirect: '/based',
     },
     {
         path: '/based',
@@ -74,11 +74,13 @@ const routes = [
             // redirect: 'passagesent'
             //},
             {
-                path: 'passagesent',
+                path: 'passagesent/:passageID',
+                name: 'passagesent',
                 component: passagesent
             },
             {
                 path: 'resousemanage',
+                name: "resousemanage",
                 component: resousemanage
             },
 

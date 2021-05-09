@@ -1,11 +1,14 @@
 <template>
+  <!-- 前台大厅留言控制 -->
   <div>
     <div>
       <el-input
         type="textarea"
         :rows="2"
+        maxlength="30"
         placeholder="请输入内容"
         v-model="textarea"
+        style="margin-left: 200px; width: 350px"
       >
       </el-input>
     </div>
@@ -43,10 +46,10 @@ export default {
         params: {
           content: this.textarea,
         },
-      }).then((res) => {
+      }).then(() => {
         window.location.reload();
         this.textarea = "";
-        console.log(res);
+        //  console.log(res);
       });
     },
     getcomment() {

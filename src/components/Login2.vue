@@ -1,10 +1,9 @@
 <template>
+  <!-- 用户登录 -->
   <div class="login-container">
     <div class="login-box">
       <!--头像区域-->
-      <div class="avater-box">
-        <img src="../assets/logo.png" />
-      </div>
+
       <!--登录表单区域-->
       <el-form
         ref="loginFormRef"
@@ -96,7 +95,7 @@ export default {
             password: this.loginForm.password,
           },
         }).then((res) => {
-          console.log(res);
+          //console.log(res);
           if (res.status === 200) {
             window.sessionStorage.setItem("token2", res.data.token);
             window.sessionStorage.setItem("token2user", res.data.userID);
@@ -116,6 +115,7 @@ export default {
         });
       });
     },
+
     login2() {
       this.$refs.loginFormRef
         .validate((valid) => {
@@ -158,7 +158,7 @@ export default {
 
 <style scoped>
 .login-container {
-  background-color: #2b4b6b;
+  background-color: #81a0be;
   height: 100%;
 }
 .login-box {

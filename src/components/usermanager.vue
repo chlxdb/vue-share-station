@@ -1,26 +1,30 @@
 <template>
-  <el-tabs type="border-card">
-    <el-tab-pane label="大厅评论">
-      <el-table
-        ref="multipleTable"
-        :data="list"
-        tooltip-effect="dark"
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-      >
-        <el-table-column type="selection" width="55"> </el-table-column>
+  <!-- 后台用户管理界面 -->
+  <div style="margin-left: 200px">
+    <h1>获取所有用户</h1>
+    <div style="height: 450px" class="scrollbar">
+      <el-scrollbar style="height: 100%">
+        <el-table
+          ref="multipleTable"
+          :data="list"
+          tooltip-effect="dark"
+          style="width: 100%"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="55"> </el-table-column>
 
-        <el-table-column prop="username" label="用户名" show-overflow-tooltip>
-        </el-table-column>
-        <el-table-column prop="password" label="密码" show-overflow-tooltip>
-        </el-table-column>
-      </el-table>
-      <div style="margin-top: 20px">
-        <el-button @click="toggleSelection()">取消选择</el-button>
-        <el-button @click="remove()">注销所选用户</el-button>
-      </div>
-    </el-tab-pane>
-  </el-tabs>
+          <el-table-column prop="username" label="用户名" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column prop="password" label="密码" show-overflow-tooltip>
+          </el-table-column>
+        </el-table>
+      </el-scrollbar>
+    </div>
+    <div style="margin-top: 20px">
+      <el-button @click="toggleSelection()">取消选择</el-button>
+      <el-button @click="remove()">注销所选用户</el-button>
+    </div>
+  </div>
 </template>
 <script>
 export default {

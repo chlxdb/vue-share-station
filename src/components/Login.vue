@@ -1,10 +1,7 @@
 <template>
+<!-- 管理员登录 -->
   <div class="login-container">
     <div class="login-box">
-      <!--头像区域-->
-      <div class="avater-box">
-        <img src="../assets/logo.png" />
-      </div>
       <!--登录表单区域-->
       <el-form
         ref="loginFormRef"
@@ -118,7 +115,7 @@ export default {
 
 <style scoped>
 .login-container {
-  background-color: #2b4b6b;
+  background-color: #81a0be;
   height: 100%;
 }
 .login-box {

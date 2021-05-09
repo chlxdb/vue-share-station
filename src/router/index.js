@@ -69,10 +69,10 @@ const routes = [
         path: '/manager',
         component: manager,
         children: [
-            // {
-            //   path: '',        //嵌套的默认路径
-            // redirect: 'passagesent'
-            //},
+            {
+                path: '',        //嵌套的默认路径
+                redirect: 'resousemanage'
+            },
             {
                 path: 'passagesent/:passageID',
                 name: 'passagesent',

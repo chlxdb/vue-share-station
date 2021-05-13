@@ -3,7 +3,9 @@
   <div class="login-container">
     <div class="login-box">
       <!--头像区域-->
-
+      <p style="margin-left: 10%; margin-top: 5%; font-size: 20px">
+        用户登录或注册区
+      </p>
       <!--登录表单区域-->
       <el-form
         ref="loginFormRef"
@@ -97,9 +99,18 @@ export default {
         }).then((res) => {
           //console.log(res);
           if (res.status === 200) {
-            window.sessionStorage.setItem("token2", res.data.token);
-            window.sessionStorage.setItem("token2user", res.data.userID);
+            var d = new Date();
+            d.setTime(d.getTime() + 1000 * 60 * 60 * 24); //24h
+            var expires = "expires=" + d.toGMTString();
+            var token2 = "token";
+
+            document.cookie = token2 + "=" + res.data.token + "; " + expires;
+            localStorage.setItem("token2user", res.data.userID);
+
+            // window.sessionStorage.setItem("token2", res.data.token);
+            // window.sessionStorage.setItem("token2user", res.data.userID);
             this.$router.push("/based"); //登录验证成功路由实现跳转
+
             this.$notify({
               title: "提示",
               message: "登录成功",
@@ -162,15 +173,17 @@ export default {
   height: 100%;
 }
 .login-box {
-  width: 450px;
-  height: 300px;
-  background-color: #fff;
+  width: 30%;
+  height: 40%;
+  background-color: rgb(255, 255, 255);
   border-radius: 3px;
   position: absolute;
   left: 35%;
   right: 50%;
-  top: 180px;
+  top: 30%;
+  opacity: 0.8;
 }
+
 .avater-box {
   width: 130px;
   height: 130px;
@@ -182,6 +195,10 @@ export default {
   top: -100px;
   background-color: #fff;
 }
+.login-box:hover {
+  opacity: 1;
+}
+
 .avater-box img {
   width: 100%;
   height: 100%;

@@ -1,7 +1,10 @@
 <template>
-<!-- 管理员登录 -->
+  <!-- 管理员登录 -->
   <div class="login-container">
     <div class="login-box">
+      <p style="margin-left: 10%; margin-top: 5%; font-size: 20px">
+        管理员登录处
+      </p>
       <!--登录表单区域-->
       <el-form
         ref="loginFormRef"
@@ -119,14 +122,18 @@ export default {
   height: 100%;
 }
 .login-box {
-  width: 450px;
-  height: 300px;
+  width: 30%;
+  height: 40%;
   background-color: #fff;
   border-radius: 3px;
   position: absolute;
   left: 35%;
   right: 50%;
   top: 180px;
+  opacity: 0.8;
+}
+.login-box:hover {
+  opacity: 1;
 }
 .avater-box {
   width: 130px;

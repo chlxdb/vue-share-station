@@ -16,7 +16,7 @@ const noticemanage = () => import('../components/noticemanage')
 const usermanager = () => import('../components/usermanager')
 const datamanage = () => import('../components/datamanage')
 const controlcomment2 = () => import('../components/controlcomment2')
-const controlcomment2passage = () => import('../components/controlcomment2passage')
+
 
 Vue.use(VueRouter)
 const routes = [
@@ -90,10 +90,7 @@ const routes = [
 
 
             },
-            {
-                path: 'controlcomment2passage',
-                component: controlcomment2passage
-            },
+
 
             {
                 path: 'controlcomment2/:passageID',

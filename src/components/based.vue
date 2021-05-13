@@ -14,25 +14,25 @@
         </router-link></el-menu-item
       >
 
-      <el-submenu index="2">
-        <template slot="title">登录</template>
-        <router-link to="/Login2">
-          <el-menu-item index="2-1">用户登录/注册</el-menu-item>
-        </router-link>
-        <router-link to="/Login">
-          <el-menu-item index="2-2">管理员登录</el-menu-item>
-        </router-link>
-      </el-submenu>
-
-      <el-menu-item index="3">
+      <el-menu-item index="2">
         <router-link to="/based/comment"
           ><span>留言大厅</span>
         </router-link></el-menu-item
       >
+      <el-submenu index="3">
+        <template slot="title">登录</template>
+        <router-link to="/Login2">
+          <el-menu-item index="3-1">用户登录/注册</el-menu-item>
+        </router-link>
+        <router-link to="/Login">
+          <el-menu-item index="3-2">管理员登录</el-menu-item>
+        </router-link>
+      </el-submenu>
+      <el-submenu index="4">
+        <template slot="title">个人中心</template>
 
-      <el-menu-item index="4">
-        <el-button type="info" @click="logout">退出</el-button>
-      </el-menu-item>
+        <el-menu-item @click="logout" index="4-1">退出登录</el-menu-item>
+      </el-submenu>
     </el-menu>
     <div>
       <router-view></router-view>
@@ -50,12 +50,14 @@ export default {
 
   methods: {
     logout() {
-      this.token2 = sessionStorage.getItem("token2");
-      if (this.token2 != "") {
-        window.sessionStorage.clear();
-        this.$notify("已退出");
+      var ca = document.cookie;
+      // alert(ca);
+      // this.token2 = sessionStorage.getItem("token2");
+      if (ca != "") {
+        document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        alert("已退出");
       } else {
-        this.$notify("还未登录");
+        alert("还未登录");
       }
     },
   },

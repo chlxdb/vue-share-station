@@ -63,12 +63,7 @@ export default {
           token: this.token,
         },
       }).then((res) => {
-        {
-          for (var i in res.data) {
-            this.list.push(res.data[i]);
-          }
-          console.log(this.list);
-        }
+        this.list = res.data[0];
       });
     },
     // remove() {

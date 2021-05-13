@@ -8,6 +8,7 @@
         </div>
       </div>
     </div>
+
     <el-button plain @click="open4" style="margin: 50px"> 最新公告 </el-button>
     <div class="hello" style="margin: 0px 25% 10px 25%">
       <h1>资料分享站</h1>
@@ -44,7 +45,8 @@
           <router-link :to="{ name: 'Details', params: { passageID: item.id } }"
             ><div>
               查看详情
-              <el-badge :value="12" class="item">
+
+              <el-badge :value="12" :max="10" class="item">
                 <el-button size="small">评论</el-button>
               </el-badge>
             </div>
@@ -86,9 +88,11 @@ export default {
   },
   created() {
     this.getnotice();
+    this.checkCookie();
   },
   mounted() {
     this.searchByPage(this.currentPage, this.pageSize);
+    // this.checkCookie();
   },
 
   methods: {
@@ -134,7 +138,6 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
-        console.log(res);
         if (this.list !== []) {
           this.list = [];
           for (let i in res.data.passageItem)
@@ -147,7 +150,15 @@ export default {
         //console.log(this.list);
       });
     },
-
+    checkCookie() {
+      var ca = document.cookie;
+      if (ca != "") {
+        this.$message({
+          message: "Welcome you comeback ",
+          type: "success",
+        });
+      }
+    },
     tables() {
       var search = this.input;
       if (search) {

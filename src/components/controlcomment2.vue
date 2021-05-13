@@ -131,9 +131,9 @@ export default {
           params: {
             commentID: this.multipleSelection[i].commentID,
           },
-        }).then(() => {
+        }).then((res) => {
           {
-            window.location.reload();
+            if (res.status == 200) window.location.reload();
           }
         });
       }

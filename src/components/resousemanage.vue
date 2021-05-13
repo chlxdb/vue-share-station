@@ -79,14 +79,14 @@
           <el-input
             type="textarea"
             v-model="form.title"
-            maxlength="30"
+            maxlength="18"
             show-word-limit
           ></el-input>
           <el-form-item label="内容">
             <el-input
               type="textarea"
               v-model="form.content"
-              maxlength="30"
+              maxlength="168"
               show-word-limit
             ></el-input>
           </el-form-item>

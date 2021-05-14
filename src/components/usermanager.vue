@@ -63,6 +63,7 @@ export default {
           token: this.token,
         },
       }).then((res) => {
+        console.log(res);
         this.list = res.data[0];
       });
     },

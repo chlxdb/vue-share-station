@@ -74,6 +74,7 @@ export default {
   name: "mainpage",
   data() {
     return {
+      value: "",
       searchData: "",
       list: [],
       input: "",
@@ -87,6 +88,7 @@ export default {
     };
   },
   created() {
+    this.value = sessionStorage.getItem("commenttotal");
     this.getnotice();
     this.checkCookie();
   },
@@ -138,16 +140,16 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
+        console.log(res);
         if (this.list !== []) {
           this.list = [];
-          for (let i in res.data.passageItem)
-            this.list.push(res.data.passageItem[i]);
+
+          this.list = res.data.passageItem;
         } else {
-          for (let i in res.data.passageItem)
-            this.list.push(res.data.passageItem[i]);
+          this.list = res.data.passageItem;
         }
         this.total = res.data.passageItemCount;
-        //console.log(this.list);
+        // console.log(this.list);
       });
     },
     checkCookie() {

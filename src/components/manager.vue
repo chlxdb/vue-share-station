@@ -35,7 +35,7 @@
             <router-link to="/manager/controlcomment1">
               <el-menu-item index="3">
                 <i class="el-icon-menu"></i>
-                <span slot="title"> 大厅评论区</span>
+                <span slot="title"> 大厅留言区</span>
               </el-menu-item>
             </router-link>
 

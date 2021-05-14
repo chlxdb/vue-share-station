@@ -30,8 +30,8 @@
       </el-submenu>
       <el-submenu index="4">
         <template slot="title">个人中心</template>
-
-        <el-menu-item @click="logout" index="4-1">退出登录</el-menu-item>
+        <el-menu-item index="4-1">我的收藏</el-menu-item>
+        <el-menu-item @click="logout" index="4-2">退出登录</el-menu-item>
       </el-submenu>
     </el-menu>
     <div>
@@ -54,6 +54,7 @@ export default {
       // alert(ca);
       // this.token2 = sessionStorage.getItem("token2");
       if (ca != "") {
+        localStorage.clear();
         document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         alert("已退出");
       } else {

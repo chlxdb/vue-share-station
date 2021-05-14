@@ -2,6 +2,12 @@ import Vue from 'vue'
 import App from './App.vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+// 引入echarts
+import * as echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
+
+
 
 import router from './router'
 //导入全局样式表

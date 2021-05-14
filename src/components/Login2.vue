@@ -145,6 +145,7 @@ export default {
           }).then((res) => {
             if (res.status === 200) {
               this.$router.push("/based"); //登录验证成功路由实现跳转
+
               this.$notify({
                 title: "提示",
                 message: "注册成功",

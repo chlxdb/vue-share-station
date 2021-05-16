@@ -5,6 +5,10 @@
       <!--头像区域-->
       <p style="margin-left: 10%; margin-top: 5%; font-size: 20px">
         用户登录或注册区
+
+        <router-link to="/based"
+          ><span style="margin-left: 150px">回到首页</span></router-link
+        >
       </p>
       <!--登录表单区域-->
       <el-form
@@ -103,19 +107,22 @@ export default {
             d.setTime(d.getTime() + 1000 * 60 * 60 * 24); //24h
             var expires = "expires=" + d.toGMTString();
             var token2 = "token";
-
-            document.cookie = token2 + "=" + res.data.token + "; " + expires;
+            var path = "path";
+            document.cookie =
+              token2 +
+              "=" +
+              res.data.token +
+              "; " +
+              expires +
+              "; " +
+              path +
+              "/based/contentdetail";
             localStorage.setItem("token2user", res.data.userID);
-
+            localStorage.setItem("username", this.loginForm.username);
+            path = sessionStorage.getItem("path");
             // window.sessionStorage.setItem("token2", res.data.token);
             // window.sessionStorage.setItem("token2user", res.data.userID);
-            this.$router.push("/based"); //登录验证成功路由实现跳转
-
-            this.$notify({
-              title: "提示",
-              message: "登录成功",
-              duration: 3000,
-            });
+            this.$router.push(path); //登录验证成功路由实现跳转
           } else {
             this.$notify({
               title: "提示",
@@ -143,9 +150,11 @@ export default {
               password: this.loginForm.password,
             },
           }).then((res) => {
-            if (res.status === 200) {
-              this.$router.push("/based"); //登录验证成功路由实现跳转
-
+            let path = sessionStorage.getItem("path");
+            alert(path);
+            if (res.status == 200) {
+              this.$router.push(path); //登录验证成功路由实现跳转
+              sessionStorage.setItem("username", this.loginForm.username);
               this.$notify({
                 title: "提示",
                 message: "注册成功",
@@ -170,7 +179,7 @@ export default {
 
 <style scoped>
 .login-container {
-  background-color: #81a0be;
+  background-color: #333;
   height: 100%;
 }
 .login-box {
@@ -182,7 +191,6 @@ export default {
   left: 35%;
   right: 50%;
   top: 30%;
-  opacity: 0.8;
 }
 
 .avater-box {
@@ -195,9 +203,6 @@ export default {
   left: 35%;
   top: -100px;
   background-color: #fff;
-}
-.login-box:hover {
-  opacity: 1;
 }
 
 .avater-box img {

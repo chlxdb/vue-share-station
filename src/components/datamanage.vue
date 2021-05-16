@@ -1,7 +1,7 @@
 <template>
   <div
     id="myChart"
-    :style="{ width: '50%', height: '50%', margin: '0 auto' }"
+    :style="{ width: '60%', height: '60%', margin: '10% 10% 10% 28%  ' }"
   ></div>
 </template>
 <script>
@@ -15,8 +15,17 @@ export default {
       msg: "Welcome to Your Vue.js App",
     };
   },
+  created() {
+    if (
+      sessionStorage.getItem("token") != "" &&
+      sessionStorage.getItem("token") != null
+    ) {
+      this.token = sessionStorage.getItem("token");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
+  },
   mounted() {
-    this.token = sessionStorage.getItem("token");
     this.preget();
     this.drawLine();
   },
@@ -87,6 +96,9 @@ export default {
         ],
       });
     },
+  },
+  updated() {
+    this.preget();
   },
 };
 </script>

@@ -11,7 +11,9 @@
           :limit="1"
           :show-file-list="false"
         >
-          <el-button size="small" type="primary">图片上传</el-button>
+          <el-button size="small" type="primary" icon="el-icon-picture-outline"
+            >图片上传</el-button
+          >
           <div slot="tip" class="el-upload__tip">
             只能上传jpg/png文件，且不超过500kb
             <p style="color: red">(图片总数不超过5张，用户体验更加！)</p>
@@ -26,7 +28,6 @@
               <el-image
                 :src="'data:image/png;base64,' + item"
                 style="width: 70px; hight: 70px; margin: 15px"
-                @click="remove1(index)"
               /><i @click="remove1(index)" class="el-icon-delete"></i>
             </span>
           </el-scrollbar>
@@ -42,13 +43,24 @@
           :limit="3"
           :show-file-list="false"
         >
-          <el-button size="small" type="primary">资源上传</el-button>
+          <el-button size="small" type="primary" icon="el-icon-suitcase"
+            >资源上传</el-button
+          >
           <!-- <div slot="tip" class="el-upload__tip">
             只能上传xlsx文件，且不超过10M
           </div> -->
         </el-upload>
       </div>
-      <div class="col"></div>
+      <div class="col">
+        <div style="height: 100%" class="scrollbar">
+          <el-scrollbar style="height: 100%">
+            <span v-for="(item, index) in domlist" :key="index">
+              <p>{{ item.address }}</p>
+              <i @click="remove2(item.id)" class="el-icon-delete"></i>
+            </span>
+          </el-scrollbar>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -60,13 +72,22 @@ export default {
       dialogVisible: false,
       picturelist: [],
       domlist: [],
+
       Id: "",
       token: "",
     };
   },
   created() {
     this.Id = this.$route.params.passageID;
-    this.token = sessionStorage.getItem("token");
+    if (
+      sessionStorage.getItem("token") != "" &&
+      sessionStorage.getItem("token") != null
+    ) {
+      this.token = sessionStorage.getItem("token");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
+
     this.getDetail();
   },
   methods: {
@@ -80,11 +101,9 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
-        // console.log(res.data[2]);
-
         this.picturelist = res.data[2];
         this.domlist = res.data[1];
-        // console.log(this.domlist);
+        // console.log(res);
       });
       // console.log(this.passagelist);
     },
@@ -113,9 +132,6 @@ export default {
           this.$notify({
             message: "图片成功上传",
           });
-          setTimeout(function () {
-            window.location.reload();
-          }, 2000);
         }
       });
     },
@@ -154,16 +170,40 @@ export default {
           this.$notify({
             message: "图片删除成功",
           });
-          setTimeout(function () {
-            window.location.reload();
-          }, 1500);
+        }
+      });
+    },
+    remove2(item) {
+      this.$axios({
+        method: "post",
+        url:
+          "http://121.4.187.232:8080/admin/deleteResources?resourcesID=" + item,
+        headers: {
+          "content-type": "multipart/form-data",
+          token: this.token,
+        },
+      }).then((res) => {
+        if (res.status == "200") {
+          this.$notify({
+            message: "链接删除成功",
+          });
         }
       });
     },
   },
+  updated() {
+    this.getDetail();
+  },
 };
 </script>
 <style scoped>
+.el-button {
+  background-color: #333;
+  color: #ffffff;
+}
+.el-icon-delete {
+  background-color: rgb(247, 183, 183);
+}
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -172,7 +212,7 @@ export default {
 .col {
   flex: 1 0 40%;
   text-align: center;
-  background: rgb(212, 230, 250);
+  background: #81828386;
   margin: 10px;
   padding: 10px 0px;
   color: #000;

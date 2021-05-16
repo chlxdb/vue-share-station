@@ -37,7 +37,16 @@ export default {
     };
   },
   created() {
-    this.token = sessionStorage.getItem("token");
+    if (
+      sessionStorage.getItem("token") != "" &&
+      sessionStorage.getItem("token") != null
+    ) {
+      this.token = sessionStorage.getItem("token");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
+  },
+  mounted() {
     this.preget();
   },
   methods: {
@@ -90,6 +99,10 @@ export default {
 };
 </script>
 <style scoped>
+.el-button {
+  background-color: #333;
+  color: #ffffff;
+}
 .el-tabs {
   margin-left: 200px;
   height: 800px;

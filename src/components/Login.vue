@@ -3,7 +3,9 @@
   <div class="login-container">
     <div class="login-box">
       <p style="margin-left: 10%; margin-top: 5%; font-size: 20px">
-        管理员登录处
+        管理员登录处<router-link to="/based"
+          ><span style="margin-left: 150px">回到首页</span></router-link
+        >
       </p>
       <!--登录表单区域-->
       <el-form
@@ -31,7 +33,15 @@
         <!--按钮区-->
         <el-form-item class="btns">
           <el-button type="primary" @click="login">登录</el-button>
-          <el-button type="info" @click="resetLoginForm">重置</el-button>
+          <el-button
+            type="info"
+            @click="resetLoginForm"
+            style="margin-right: 15px"
+            >重置</el-button
+          >
+          <el-checkbox v-model="checked" @change="checkbox"
+            >记住密码</el-checkbox
+          >
         </el-form-item>
       </el-form>
     </div>
@@ -45,9 +55,11 @@ export default {
   data() {
     return {
       //登录表单的数据对象
+
+      checked: false,
       loginForm: {
-        username: "admin",
-        password: "admin",
+        username: "",
+        password: "",
       },
       //表单验证规则对象
       loginFormRules: {
@@ -74,7 +86,22 @@ export default {
       },
     };
   },
+  created() {
+    if (localStorage.getItem("status") != "false") {
+      this.checked = true;
+      this.loginForm.username = localStorage.getItem("name");
+      this.loginForm.password = localStorage.getItem("password");
+    } else {
+      this.checked = false;
+    }
+  },
   methods: {
+    checkbox() {
+      if (this.checked != false) {
+        window.localStorage.setItem("name", this.loginForm.username);
+        window.localStorage.setItem("password", this.loginForm.password);
+      }
+    },
     //点击重置表单
     resetLoginForm() {
       this.$refs.loginFormRef.resetFields();
@@ -82,34 +109,65 @@ export default {
     login() {
       this.$refs.loginFormRef.validate((valid) => {
         if (!valid) return;
-
-        this.$axios({
-          url: "http://121.4.187.232:8080/user/adminLogin",
-          method: "post",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          params: {
-            username: this.loginForm.username,
-            password: this.loginForm.password,
-          },
-        }).then((res) => {
-          if (res.data.state === true) {
-            window.sessionStorage.setItem("token", res.data.token);
-            this.$router.push("/manager"); //登录验证成功路由实现跳转
-            this.$notify({
-              title: "提示",
-              message: "管理员登录成功",
-              duration: 3000,
-            });
-          } else {
-            this.$notify({
-              title: "提示",
-              message: "管理员登录失败",
-              duration: 3000,
-            });
-          }
-        });
+        if (this.checked != false) {
+          this.$axios({
+            url: "http://121.4.187.232:8080/user/adminLogin",
+            method: "post",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            params: {
+              username: localStorage.getItem("name"),
+              password: localStorage.getItem("password"),
+            },
+          }).then((res) => {
+            if (res.data.state === true) {
+              window.localStorage.setItem("status", this.checked);
+              window.localStorage.setItem("token", res.data.token);
+              this.$router.push("/manager"); //登录验证成功路由实现跳转
+              this.$notify({
+                title: "提示",
+                message: "管理员登录成功",
+                duration: 3000,
+              });
+            } else {
+              this.$notify({
+                title: "提示",
+                message: "管理员登录失败",
+                duration: 3000,
+              });
+            }
+          });
+        } else {
+          this.$axios({
+            url: "http://121.4.187.232:8080/user/adminLogin",
+            method: "post",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            params: {
+              username: this.loginForm.username,
+              password: this.loginForm.password,
+            },
+          }).then((res) => {
+            if (res.data.state === true) {
+              window.localStorage.setItem("status", this.checked);
+              window.sessionStorage.setItem("token", res.data.token);
+              this.$router.push("/manager"); //登录验证成功路由实现跳转
+              this.$notify({
+                title: "提示",
+                message: "管理员登录成功",
+                duration: 3000,
+              });
+            } else {
+              this.$notify({
+                title: "提示",
+                message: "管理员登录失败",
+                duration: 3000,
+              });
+            }
+          });
+        }
       });
     },
   },
@@ -118,7 +176,7 @@ export default {
 
 <style scoped>
 .login-container {
-  background-color: #81a0be;
+  background-color: #333;
   height: 100%;
 }
 .login-box {
@@ -130,11 +188,8 @@ export default {
   left: 35%;
   right: 50%;
   top: 180px;
-  opacity: 0.8;
 }
-.login-box:hover {
-  opacity: 1;
-}
+
 .avater-box {
   width: 130px;
   height: 130px;

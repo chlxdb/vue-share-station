@@ -1,8 +1,8 @@
 <template>
-  <!-- 后台大厅评论控制 -->
+  <!-- 后台大厅留言控制 -->
   <div style="margin-left: 200px">
-    <el-button type="text" @click="dialogVisible = true">发布新评论</el-button>
-    <el-dialog title="发布新评论" :visible.sync="dialogVisible" width="30%">
+    <el-button @click="dialogVisible = true">发布新留言</el-button>
+    <el-dialog title="发布新留言" :visible.sync="dialogVisible" width="30%">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="评论">
           <el-input
@@ -54,8 +54,15 @@ export default {
     };
   },
   created() {
+    if (
+      sessionStorage.getItem("token") != "" &&
+      sessionStorage.getItem("token") != null
+    ) {
+      this.token = sessionStorage.getItem("token");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
     this.preget();
-    this.token = sessionStorage.getItem("token");
   },
   methods: {
     toggleSelection(rows) {
@@ -76,7 +83,7 @@ export default {
         url: "http://121.4.187.232:8080/hallComment/queryAllHallComment",
         method: "get",
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (this.list == "") {
           for (var i in res.data) {
             this.list.push(res.data[i]);
@@ -115,9 +122,7 @@ export default {
             ID: this.multipleSelection[i].id,
           },
         }).then(() => {
-          {
-            window.location.reload();
-          }
+          window.location.reload();
         });
       }
     },
@@ -125,6 +130,10 @@ export default {
 };
 </script>
 <style scoped>
+.el-button {
+  background-color: #333;
+  color: #ffffff;
+}
 .el-tabs {
   margin-left: 200px;
   height: 800px;

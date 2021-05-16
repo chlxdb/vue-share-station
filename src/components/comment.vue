@@ -1,6 +1,6 @@
 <template>
   <!-- 前台大厅留言控制 -->
-  <div>
+  <div style="background-color: rgb(224 230 239)">
     <div>
       <el-input
         type="textarea"
@@ -8,18 +8,24 @@
         maxlength="30"
         placeholder="请输入内容"
         v-model="textarea"
-        style="margin-left: 200px; width: 350px"
+        style="margin: 50px 0 0 200px; width: 350px"
       >
       </el-input>
+      <el-button
+        @click="sent"
+        style="margin-left: 50px; background-color: #333; color: #ffffff"
+        >发表评论</el-button
+      >
     </div>
-    <div style="margin-left: 200px">
-      <el-button @click="sent">发表评论</el-button>
-      <el-table :data="list" style="width: 100%" height="800px">
-        <el-table-column fixed prop="content" label="内容" width="400">
-        </el-table-column>
-        <el-table-column prop="time" label="时间" width="400">
-        </el-table-column>
-      </el-table>
+
+    <div style="margin: 50px 0 0 200px; height: 600px" class="scrollbar">
+      <el-scrollbar style="height: 100%">
+        <el-table :data="list" style="width: 60%; height: 100%">
+          <el-table-column fixed prop="content" label="内容" width="300">
+          </el-table-column>
+          <el-table-column prop="time" label="时间" width="300">
+          </el-table-column> </el-table
+      ></el-scrollbar>
     </div>
   </div>
 </template>
@@ -28,6 +34,7 @@ export default {
   name: "comment",
   created: function () {
     this.getcomment();
+    sessionStorage.setItem("path", this.$route.path);
   },
   data() {
     return {

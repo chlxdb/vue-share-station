@@ -1,5 +1,5 @@
 <template>
-<!-- 公告控制 -->
+  <!-- 公告控制 -->
   <div style="margin: 200px">
     <div>
       <el-input
@@ -10,7 +10,7 @@
         v-model="textarea"
       >
       </el-input>
-      <el-button @click="sent">发表评论</el-button>
+      <el-button @click="sent">发布新公告</el-button>
     </div>
   </div>
 </template>
@@ -22,6 +22,16 @@ export default {
       textarea: "",
       token: "",
     };
+  },
+  created() {
+    if (
+      sessionStorage.getItem("token") != "" &&
+      sessionStorage.getItem("token") != null
+    ) {
+      this.token = sessionStorage.getItem("token");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
   },
   methods: {
     sent() {
@@ -36,13 +46,24 @@ export default {
         params: {
           content: this.textarea,
         },
-      }).then(() => {
-        window.location.reload();
-        this.textarea = "";
+      }).then((res) => {
+        if (res.status == 200) {
+          this.$notify({
+            title: "提示",
+            message: "公布成功",
+            duration: 3000,
+          });
+          this.textarea = "";
+        }
       });
     },
   },
+  updated() {},
 };
 </script>
 <style scoped>
+.el-button {
+  background-color: #333;
+  color: #ffffff;
+}
 </style>

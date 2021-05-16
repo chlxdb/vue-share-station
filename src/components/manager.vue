@@ -69,7 +69,9 @@ export default {
 
   methods: {
     logout() {
-      window.sessionStorage.clear();
+      localStorage.removeItem("status");
+      localStorage.removeItem("name");
+      localStorage.removeItem("password");
       this.$router.push("/Login");
     },
   },

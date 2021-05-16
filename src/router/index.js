@@ -58,11 +58,24 @@ const routes = [
         path: '/Login',
         component: login,
 
+
     },
 
     {
         path: '/Login2',
         component: login2,
+
+
+
+
+
+
+
+
+
+
+
+
     },
 
     {
@@ -121,9 +134,14 @@ const routes = [
         beforeEnter: (to, from, next) => {
             if (to.path === '/Login') return next();
             // 获取token
-            const tokenStr = window.sessionStorage.getItem('token')
-            if (!tokenStr) return next('/Login')
+            const tokenStr1 = window.sessionStorage.getItem('token')
+            const tokenStr2 = window.localStorage.getItem('token')
+            if (!tokenStr1 && !tokenStr2)
+
+                return next('/Login')
             next()
+
+
 
         }
 

@@ -1,6 +1,6 @@
 <template>
   <!-- 详情页控制 -->
-  <div>
+  <div style="background-color: rgb(224 230 239)">
     <!-- interval可以调节轮播时间 -->
     <el-card>
       <el-carousel :interval="2000" type="card" height="250px">
@@ -15,20 +15,6 @@
 
     <!-- 文章专区 -->
     <div class="container">
-      <div class="col" v-for="(item, index) in passagelist" :key="index">
-        <strong style="margin: 5px 60px 5px 60px"
-          >{{ item.title }}级超级多</strong
-        >
-        <p style="text-indent: 2em; margin-left: 20px; margin-right: 100px">
-          {{
-            item.content
-          }}级超级多超级超级多超级超级多超级超级多超级超超级超级多超超级超级多超级多超级超级多超
-        </p>
-        <p style="font-size: 10px; margin-left: 20px">
-          发布于：{{ item.time }}
-        </p>
-      </div>
-
       <!-- 评论区 -->
       <div class="col">
         <p><strong>评论区</strong></p>
@@ -44,19 +30,32 @@
 
         <el-button @click="sent">发表评论</el-button>
       </div>
-      <!-- 资源下载 -->
-      <div class="col">
+      <div class="col" v-for="(item, index) in passagelist" :key="index">
         <p
-          v-for="(item, index) in domlist"
-          :key="index"
-          style="margin-left: 15px"
+          style="margin: 5px 60px 5px 60px; text-align: center; font-size: 32px"
         >
-          <a style="color: red" @click="load(item.address)">下载资源</a>
+          {{ item.title }}级超多超级多级多级多级
+        </p>
+        <p
+          style="
+            text-indent: 2em;
+            margin-left: 20px;
+
+            margin-right: 100px;
+          "
+        >
+          {{
+            item.content
+          }}级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级超级多超级多超级
+        </p>
+
+        <p style="font-size: 10px; margin-left: 20px">
+          发布于：{{ item.time }}
         </p>
       </div>
       <!-- 资源浏览 -->
       <div class="col">
-        <div style="height: 100%" class="scrollbar">
+        <div style="height: 300px" class="scrollbar">
           <el-scrollbar style="height: 100%">
             <div
               v-for="(item, index) in commentlist"
@@ -72,9 +71,9 @@
                 ></el-avatar>
                 {{ item.username }}:
 
-                <span style="font-family: initial; font-size: 16px">{{
-                  item.content
-                }}</span>
+                <p style="font-family: initial; font-size: 16px">
+                  {{ item.content }}
+                </p>
                 <p style="font-family: initial; font-size: 10px">
                   评论于：{{ item.time }}
                 </p></span
@@ -82,6 +81,16 @@
             </div>
           </el-scrollbar>
         </div>
+      </div>
+      <!-- 资源下载 -->
+      <div class="col">
+        <p
+          v-for="(item, index) in domlist"
+          :key="index"
+          style="margin-left: 15px"
+        >
+          <a style="color: red" @click="load(index)">下载资源</a>
+        </p>
       </div>
     </div>
   </div>
@@ -105,12 +114,10 @@ export default {
     };
   },
   created() {
-    var ca = document.cookie.split("=");
-    this.token = ca[1];
-    this.tokenuser = localStorage.getItem("token2user");
     this.Id = this.$route.params.passageID;
     this.getDetail(this.passageID);
     this.getDetailcomment(this.passageID);
+    sessionStorage.setItem("path", this.$route.path);
   },
   methods: {
     getDetail() {
@@ -152,7 +159,10 @@ export default {
     },
 
     sent() {
-      let ca = document.cookie;
+      var ca = document.cookie.split("=");
+      this.token = ca[1];
+      this.tokenuser = localStorage.getItem("token2user");
+      // alert(ca);
       if (ca != "") {
         this.$axios({
           url:
@@ -173,9 +183,6 @@ export default {
               message: "发表成功",
               type: "success",
             });
-            setTimeout(function () {
-              window.location.reload();
-            }, 2000);
           }
         });
       } else {
@@ -185,27 +192,28 @@ export default {
         });
       }
       this.textarea = "";
-      window.location.reload();
+      // window.location.reload();
     },
 
-    load(item) {
+    load(index) {
       // alert(item);
       this.$axios({
-        url: "http://121.4.187.232:8080/passage/downResources?filePath=" + item,
+        url: `http://121.4.187.232:8080/passage/downResources?filePath=${this.domlist[index].address}`,
         method: "post",
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        params: {
-          responseType: "blob",
-        },
+
+        responseType: "blob",
       }).then((res) => {
         // console.log(res);
-        let blob = new Blob([res.data], { type: res.data.type });
+        console.log(res);
+        res = res.data;
+        let blob = new Blob([res], { type: res.type });
         let downloadElement = document.createElement("a");
         let href = window.URL.createObjectURL(blob);
         downloadElement.href = href;
-        downloadElement.download = item.address;
+        downloadElement.download = this.domlist[index].address;
         document.body.appendChild(downloadElement);
         downloadElement.click();
         document.body.removeChild(downloadElement);
@@ -214,9 +222,17 @@ export default {
       });
     },
   },
+  updated() {
+    this.getDetailcomment();
+  },
 };
 </script>
 <style scoped>
+.el-button {
+  margin-left: 50px;
+  background-color: #333;
+  color: #ffffff;
+}
 .container {
   display: flex;
   flex-wrap: wrap;
@@ -226,7 +242,7 @@ export default {
 .col {
   flex: 1 0 40%;
   /* text-align: center; */
-  background: rgb(212, 230, 250);
+  background: rgb(224 230 239);
   margin: 0;
   padding: 10px 0px;
   color: #000;

@@ -120,6 +120,7 @@ export default {
       list: [],
       input: "",
       token: "",
+
       id: "",
       total: 30, //数据库中总条数
       pageSize: 5,
@@ -127,7 +128,14 @@ export default {
     };
   },
   created() {
-    this.token = sessionStorage.getItem("token");
+    if (
+      sessionStorage.getItem("token") != "" &&
+      sessionStorage.getItem("token") != null
+    ) {
+      this.token = sessionStorage.getItem("token");
+    } else {
+      this.token = localStorage.getItem("token");
+    }
   },
   mounted() {
     this.searchByPage(this.currentPage, this.pageSize);
@@ -251,6 +259,10 @@ export default {
 
 
 <style scoped>
+.el-button {
+  background-color: #333;
+  color: #ffffff;
+}
 .item {
   position: relative;
   box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);

@@ -1,5 +1,5 @@
 <template>
-  <div style="margin: 0 auto; background-color: #f0f8ff">
+  <div style="margin: 0 auto; background-color: ">
     <div slot="header" class="clearfix">
       <div class="wrap">
         <div class="content">
@@ -9,9 +9,8 @@
       </div>
     </div>
 
-    <el-button plain @click="open4" style="margin: 50px"> 最新公告 </el-button>
     <div class="hello" style="margin: 0px 25% 10px 25%">
-      <h1>资料分享站</h1>
+      <h1 style="font-size: 54px">资料分享站</h1>
 
       <el-row class="table-grid-content">
         <el-col :span="18" class="grid">
@@ -25,33 +24,34 @@
       </el-row>
 
       <div class="item" v-for="(item, index) in list" :key="index">
-        <el-card class="box-card">
-          <div slot="header" class="clearfix">
-            <span
-              ><p class="title">
-                {{
-                  item.title
-                }}超级超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多
-              </p></span
-            >
-          </div>
-          <div class="text">
-            {{
-              item.content
-            }}超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级多超级超级多超级超级多超级超级多超级超级多超级超级多
-          </div>
+        <router-link :to="{ name: 'Details', params: { passageID: item.id } }">
+          <el-card class="box-card">
+            <div slot="header" class="clearfix">
+              <span
+                ><p class="title">
+                  {{ item.title }}超级超级超级多超级超级多超级超
+                  级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超级多超级超超级多超级超超级多超级超超级多超级超超级多超级超超级多超级超超级多超级超超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多
+                </p></span
+              >
+            </div>
+            <div class="text">
+              {{
+                item.content
+              }}超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级超级多超级多超级超级多超级超级多超级超级多超级超级多超级超级多
+            </div>
 
-          <span style="font-size: 1px">发布于:{{ item.time }}</span>
-          <router-link :to="{ name: 'Details', params: { passageID: item.id } }"
-            ><div>
+            <span style="font-size: 1px">发布于:{{ item.time }}</span>
+            <div id="see">
               查看详情
 
               <el-badge :value="12" :max="10" class="item">
-                <el-button size="small">评论</el-button>
+                <el-button size="small" icon="el-icon-chat-dot-round"
+                  >评论</el-button
+                >
               </el-badge>
             </div>
-          </router-link>
-        </el-card>
+          </el-card>
+        </router-link>
       </div>
 
       <div class="block">
@@ -83,7 +83,6 @@ export default {
       pageSize: 5,
       currentPage: 1,
       shopGoods: "",
-      notice: "",
       show: true,
     };
   },
@@ -110,13 +109,7 @@ export default {
         this.notice = res.data;
       });
     },
-    open4() {
-      this.$notify({
-        title: "最新公告:",
-        message: this.notice,
-        position: "left",
-      });
-    },
+
     handleSizeChange: function (size) {
       this.pageSize = size;
       //console.log(this.pageSize); //每页下拉显示数据
@@ -140,7 +133,7 @@ export default {
           "Content-Type": "application/x-www-form-urlencoded",
         },
       }).then((res) => {
-        console.log(res);
+        // console.log(res);
         if (this.list !== []) {
           this.list = [];
 
@@ -161,18 +154,18 @@ export default {
         });
       }
     },
-    tables() {
-      var search = this.input;
-      if (search) {
-        this.searchData = this.list.filter(function (list) {
-          console.log(list.title);
-          return Object.keys(list.title).some(function (key) {
-            console.log(key);
-            return String(list.title[key]).toLowerCase().indexOf(search) > -1;
-          });
-        });
-      }
-    },
+    // tables() {
+    //   var search = this.input;
+    //   if (search) {
+    //     this.searchData = this.list.filter(function (list) {
+    //       console.log(list.title);
+    //       return Object.keys(list.title).some(function (key) {
+    //         console.log(key);
+    //         return String(list.title[key]).toLowerCase().indexOf(search) > -1;
+    //       });
+    //     });
+    //   }
+    //},
   },
   // computed: {
   //   tables() {
@@ -197,6 +190,9 @@ export default {
 };
 </script>
 <style scoped>
+#see:hover {
+  font-size: 25px;
+}
 .el-badge.item {
   margin: 5px;
   margin-left: 310px;
@@ -219,7 +215,7 @@ export default {
   margin: 0px 0;
   display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
 .item {
@@ -231,14 +227,15 @@ export default {
   margin: 50px;
 }
 :hover.item {
+  font-size: 20px;
   box-shadow: 0 60px 200px 0 rgba(0, 0, 0, 0.1);
-  background-color: rgb(150, 202, 245);
-  opacity: 0.8;
+  background-color: rgb(115, 191, 253);
 }
+
 .text {
   display: -webkit-box;
   overflow: hidden;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 }
 
@@ -247,7 +244,7 @@ export default {
   overflow: hidden;
   position: absolute;
   top: 100px;
-  left: 900px;
+  left: 950px;
   width: 300px;
   bottom: 300px;
 }
@@ -305,6 +302,13 @@ export default {
 
 .content p:nth-child(2) {
   animation: anim2 4s linear infinite;
+}
+a {
+  text-decoration: none;
+}
+
+.router-link-active {
+  text-decoration: none;
 }
 </style>
 <style >

@@ -3,9 +3,7 @@
   <div style="margin-left: 200px">
     <div style="margin: 50px">
       文章评论
-      <el-button type="text" @click="dialogVisible = true"
-        >发布新评论</el-button
-      >
+      <el-button @click="dialogVisible = true">发布新评论</el-button>
       <el-dialog title="发布新评论" :visible.sync="dialogVisible" width="30%">
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item label="评论">

@@ -41,7 +41,7 @@
                 params: { passageID: scope.row.id },
               }"
             >
-              <el-link> 评论详情</el-link>
+              <el-link style="color: red"> 评论详情</el-link>
             </router-link>
             <router-link
               :to="{
@@ -49,7 +49,7 @@
                 params: { passageID: scope.row.id },
               }"
             >
-              <el-link> /资源详情</el-link>
+              <el-link style="color: red"> /资源详情</el-link>
             </router-link>
           </template>
         </el-table-column>

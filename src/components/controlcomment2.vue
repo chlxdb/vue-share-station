@@ -140,6 +140,10 @@ export default {
 };
 </script>
 <style scoped>
+.el-button {
+  background-color: #333;
+  color: #ffffff;
+}
 .el-tabs {
   margin-left: 200px;
   height: 800px;

@@ -46,9 +46,9 @@
           <el-button size="small" type="primary" icon="el-icon-suitcase"
             >资源上传</el-button
           >
-          <!-- <div slot="tip" class="el-upload__tip">
+          <div slot="tip" class="el-upload__tip">
             只能上传xlsx文件，且不超过10M
-          </div> -->
+          </div>
         </el-upload>
       </div>
       <div class="col">
